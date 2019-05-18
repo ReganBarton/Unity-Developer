@@ -7,12 +7,15 @@ public class Board : MonoBehaviour
     public int Width;
     public int Height;
     public GameObject TilePrefab;
+    public GameObject[] dots;
     private Background[,] Tiles;
+    public GameObject[,] allDots;
+
     
-    // Start is called before the first frame update
     void Start()
     {
-        Tiles = new Background[Width, Height];
+        Tiles = new Background[Width, Height];  /*Initilizing array for background game tiles. */
+        allDots = new GameObject[Width, Height]; /*Initilizing array for interactive tiles. */
         SetUp();
 
     }
@@ -23,15 +26,19 @@ public class Board : MonoBehaviour
         {
            for (int w = 0; w < Height; w++)
             {
-                Vector2 tempPosition = new Vector2(i, w);
+                Vector2 tempPosition = new Vector2(i, w);   /*Creates game tiles and alignes them in rows and columns. */
                 GameObject backgroundTile =  Instantiate(TilePrefab, tempPosition,Quaternion.identity) as GameObject;
                 backgroundTile.transform.parent = this.transform;
                 backgroundTile.name = "( " + i + ", " + w + " )";
+                int dotToUse = Random.Range(0, dots.Length);  /*Creates random colored interactive dots on the generated tiles.*/
+                GameObject dot = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
+                dot.transform.parent = this.transform;
+                dot.name = "( " + i + ", " + w + " )";
+                allDots[i, w] = dot;
             }
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         
