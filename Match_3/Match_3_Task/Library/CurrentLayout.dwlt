@@ -115,7 +115,7 @@ MonoBehaviour:
   m_MinSize: {x: 713, y: 498}
   m_MaxSize: {x: 18008, y: 14048}
   vertical: 0
-  controlID: 68
+  controlID: 65
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -160,8 +160,8 @@ MonoBehaviour:
     y: 0
     width: 453
     height: 414
-  m_MinSize: {x: 202, y: 224}
-  m_MaxSize: {x: 4002, y: 4024}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -187,8 +187,8 @@ MonoBehaviour:
     y: 414
     width: 453
     height: 524
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 224}
+  m_MaxSize: {x: 4002, y: 4024}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -290,8 +290,8 @@ MonoBehaviour:
     y: 0
     width: 277
     height: 938
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 277, y: 74}
+  m_MaxSize: {x: 4002, y: 4024}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -410,9 +410,9 @@ MonoBehaviour:
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.42941004, y: 0.85749453, z: 0.19272329}
+    m_Target: {x: 1.9224174, y: 8.868799, z: 0.16794734}
     speed: 2
-    m_Value: {x: 0.42941004, y: 0.85749453, z: 0.19272329}
+    m_Value: {x: 1.9224174, y: 8.868799, z: 0.16794734}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -444,9 +444,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 2.8039734
+    m_Target: 5.331929
     speed: 2
-    m_Value: 2.8039734
+    m_Value: 5.331929
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -515,7 +515,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 1eecffff5eecffff66ecffff96ecffff2eedffff52faffffbafaffffc2faffffd6fbffff6a280000
+      m_ExpandedIDs: d6fbffff72280000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -577,20 +577,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Prefabs
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Prefabs
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\Regan\Desktop\Unity-Developer\Match_3\Match_3_Task
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 48270000
-    m_LastClickedID: 10056
-    m_ExpandedIDs: 000000000c26000000ca9a3b
+    m_SelectedIDs: 44270000
+    m_LastClickedID: 10052
+    m_ExpandedIDs: 000000001226000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -618,7 +618,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000000c260000
+    m_ExpandedIDs: 0000000012260000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -649,18 +649,18 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: 2228000024280000182c00002a270000ea270000e42f00001836000016300000922900000000000086300000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Gems
-      m_OriginalName: Gems
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 10828
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_CreateAssetUtility:

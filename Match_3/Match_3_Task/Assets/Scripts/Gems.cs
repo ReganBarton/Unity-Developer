@@ -8,6 +8,7 @@ public class Gems : MonoBehaviour
     public int row;
     public int TargetX;
     public int TargetY;
+    public bool isMatched = false;
     private GameObject otherDot;
     private Board board;
     private Vector2 firstTouchPosition; //On finger down
@@ -27,6 +28,12 @@ public class Gems : MonoBehaviour
 
     void Update()
     {
+        FindMatch();
+        if (isMatched)
+        {
+            SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
+            mySprite.color = new Color(1f, 1f, 1f, .2f);
+        }
         TargetX = column;
         TargetY = row;
         if(Mathf.Abs(TargetX - transform.position.x) > .1)
@@ -107,6 +114,33 @@ public class Gems : MonoBehaviour
             otherDot = board.allDots[column, row - 1];
             otherDot.GetComponent<Gems>().row += 1;
             row -= 1;
+        }
+    }
+
+    void FindMatch()
+    {
+        if(column > 0 && column < board.Width - 1)
+        {
+            GameObject leftGem1 = board.allDots[column - 1, row];
+            GameObject rightGem1 = board.allDots[column + 1, row];
+            if (leftGem1.tag == this.gameObject.tag && rightGem1.tag == this.gameObject.tag)
+            {
+                leftGem1.GetComponent<Gems>().isMatched = true;
+                rightGem1.GetComponent<Gems>().isMatched = true;
+                isMatched = true;
+            }
+        }
+
+        if (row > 0 && row < board.Height - 1)
+        {
+            GameObject UpGem1 = board.allDots[column, row + 1];
+            GameObject DownGem1 = board.allDots[column, row - 1];
+            if (UpGem1.tag == this.gameObject.tag && DownGem1.tag == this.gameObject.tag)
+            {
+                UpGem1.GetComponent<Gems>().isMatched = true;
+                DownGem1.GetComponent<Gems>().isMatched = true;
+                isMatched = true;
+            }
         }
     }
 
