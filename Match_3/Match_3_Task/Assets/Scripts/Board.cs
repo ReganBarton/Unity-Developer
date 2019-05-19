@@ -12,7 +12,6 @@ public enum GameState
 
 public class Board : MonoBehaviour
 {
-
     public GameState currentState = GameState.move;
     public int Width;
     public int Height;
@@ -21,10 +20,12 @@ public class Board : MonoBehaviour
     public GameObject[] dots;
     private Background[,] Tiles;
     public GameObject[,] allDots;
+    private FindMatches findMatches;
 
     
     void Start()
     {
+        findMatches = FindObjectOfType<FindMatches>();
         Tiles = new Background[Width, Height];  /*Initilizing array for background game tiles. */
         allDots = new GameObject[Width, Height]; /*Initilizing array for interactive tiles. */
         SetUp();
@@ -99,6 +100,7 @@ public class Board : MonoBehaviour
     {
         if (allDots[column, row].GetComponent<Gems>().isMatched)
         {
+            findMatches.currentMatches.Remove(allDots[column, row]);
             Destroy(allDots[column, row]);
             allDots[column, row] = null;
         }
@@ -137,7 +139,7 @@ public class Board : MonoBehaviour
             }
             nullCount = 0;
         }
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(.3f);
         StartCoroutine(FillBoardCo());
     }
 
@@ -189,7 +191,7 @@ public class Board : MonoBehaviour
             DestroyMatches();
             Maxiterations++;
         }
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.3f);
         currentState = GameState.move;
     }
 

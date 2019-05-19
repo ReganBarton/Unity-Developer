@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Gems : MonoBehaviour
 {
     public int column;
@@ -12,7 +13,7 @@ public class Gems : MonoBehaviour
     public int TargetY;
     public bool isMatched = false;
 
-
+    private FindMatches findMatches; 
     private GameObject otherDot;
     private Board board;
     private Vector2 firstTouchPosition; //On finger down
@@ -24,6 +25,7 @@ public class Gems : MonoBehaviour
     void Start()
     {
         board = FindObjectOfType<Board>();
+        findMatches = FindObjectOfType<FindMatches>();
         //TargetX = (int)transform.position.x;
        // TargetY = (int)transform.position.y;
         //row = TargetY;
@@ -35,7 +37,7 @@ public class Gems : MonoBehaviour
 
     void Update()
     {
-        FindMatch();
+        //FindMatch();
         if (isMatched)
         {
             SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
@@ -52,6 +54,7 @@ public class Gems : MonoBehaviour
             {
                 board.allDots[column, row] = this.gameObject;
             }
+            findMatches.FindAllMatches();
         }
         else
         {
@@ -70,6 +73,9 @@ public class Gems : MonoBehaviour
             {
                 board.allDots[column, row] = this.gameObject;
             }
+
+            findMatches.FindAllMatches();
+
         }
         else
         {
@@ -82,7 +88,7 @@ public class Gems : MonoBehaviour
 
     public IEnumerator CheckMoveCo()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.3f);
         if(otherDot != null)
         {
             if (!isMatched && !otherDot.GetComponent<Gems>().isMatched)
@@ -91,7 +97,7 @@ public class Gems : MonoBehaviour
                 otherDot.GetComponent<Gems>().column = column;
                 row = previousRow;
                 column = previousColumn;
-                yield return new WaitForSeconds(.5f);
+                yield return new WaitForSeconds(.3f);
                 board.currentState = GameState.move;
             }
             else

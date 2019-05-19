@@ -623,6 +623,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Background.cs" />
     <Compile Include="Assets\Scripts\Board.cs" />
+    <Compile Include="Assets\Scripts\FindMatches.cs" />
     <Compile Include="Assets\Scripts\Gems.cs" />
     <Compile Include="Assets\Scripts\Swiper.cs" />
   </ItemGroup>
