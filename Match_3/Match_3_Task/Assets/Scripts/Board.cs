@@ -2,10 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum GameState
+{
+    wait,
+    move
+}
+
+
 public class Board : MonoBehaviour
 {
+
+    public GameState currentState = GameState.move;
     public int Width;
     public int Height;
+    public int offSet;
     public GameObject TilePrefab;
     public GameObject[] dots;
     private Background[,] Tiles;
@@ -26,7 +37,7 @@ public class Board : MonoBehaviour
         {
            for (int w = 0; w < Height; w++)
             {
-                Vector2 tempPosition = new Vector2(i, w);   /*Creates game tiles and alignes them in rows and columns. */
+                Vector2 tempPosition = new Vector2(i, w + offSet);   /*Creates game tiles and alignes them in rows and columns. */
                 GameObject backgroundTile =  Instantiate(TilePrefab, tempPosition,Quaternion.identity) as GameObject;
                 backgroundTile.transform.parent = this.transform;
                 backgroundTile.name = "( " + i + ", " + w + " )";
@@ -42,6 +53,8 @@ public class Board : MonoBehaviour
                 maxIterations = 0;
 
                 GameObject dot = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
+                dot.GetComponent<Gems>().row = w;
+                dot.GetComponent<Gems>().column = i;
                 dot.transform.parent = this.transform;
                 dot.name = "( " + i + ", " + w + " )";
                 allDots[i, w] = dot;
@@ -95,7 +108,7 @@ public class Board : MonoBehaviour
     {
         for(int i = 0; i < Width; i++)
         {
-            for(int w = 0; w < Width; w++)
+            for(int w = 0; w < Height; w++)
             {
                 if(allDots[i, w] != null)
                 {
@@ -125,5 +138,59 @@ public class Board : MonoBehaviour
             nullCount = 0;
         }
         yield return new WaitForSeconds(.4f);
+        StartCoroutine(FillBoardCo());
     }
+
+    private void RefillBoard()
+    {
+        for(int i = 0; i< Width; i++)
+        {
+            for (int w = 0; w < Height; w++)
+            {
+                if (allDots[i, w] == null)
+                {
+                    Vector2 tempPosition = new Vector2(i, w + offSet);
+                    int dotToUse = Random.Range(0, dots.Length);
+                    GameObject piece = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
+                    allDots[i, w] = piece;
+                    piece.GetComponent<Gems>().row = w;
+                    piece.GetComponent<Gems>().column = i;
+                }
+            }
+        }
+    }
+
+    private bool MatchesOnBoard()
+    {
+        for (int i = 0; i < Width; i++)
+        {
+            for (int w = 0; w < Height; w++)
+            {
+                if(allDots[i, w] != null)
+                {
+                    if(allDots[i, w].GetComponent<Gems>().isMatched)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private IEnumerator FillBoardCo()
+    {
+        RefillBoard();
+        yield return new WaitForSeconds(.3f);
+        int Maxiterations = 0;
+        while (MatchesOnBoard() && Maxiterations < 100)
+        {
+            yield return new WaitForSeconds(.3f);
+            DestroyMatches();
+            Maxiterations++;
+        }
+        yield return new WaitForSeconds(.5f);
+        currentState = GameState.move;
+    }
+
 }

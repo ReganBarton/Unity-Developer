@@ -24,12 +24,12 @@ public class Gems : MonoBehaviour
     void Start()
     {
         board = FindObjectOfType<Board>();
-        TargetX = (int)transform.position.x;
-        TargetY = (int)transform.position.y;
-        row = TargetY;
-        column = TargetX;
-        previousRow = row;
-        previousColumn = column;
+        //TargetX = (int)transform.position.x;
+       // TargetY = (int)transform.position.y;
+        //row = TargetY;
+        //column = TargetX;
+        //previousRow = row;
+        //previousColumn = column;
     }
 
 
@@ -91,10 +91,13 @@ public class Gems : MonoBehaviour
                 otherDot.GetComponent<Gems>().column = column;
                 row = previousRow;
                 column = previousColumn;
+                yield return new WaitForSeconds(.5f);
+                board.currentState = GameState.move;
             }
             else
             {
                 board.DestroyMatches();
+
             }
             otherDot = null;
         }
@@ -104,15 +107,20 @@ public class Gems : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (board.currentState == GameState.move)
+        { 
         firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Debug.Log(firstTouchPosition);
+        }
 
     }
 
     private void OnMouseUp()
     {
-        lastTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Angle();
+        if (board.currentState == GameState.move)
+        {
+            lastTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Angle();
+        }
     }
 
     void Angle()
@@ -122,6 +130,11 @@ public class Gems : MonoBehaviour
         swipeAngle = Mathf.Atan2(lastTouchPosition.y - firstTouchPosition.y, lastTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
         //Debug.Log(swipeAngle);
         MovePieces();
+            board.currentState = GameState.wait;
+        }
+        else
+        {
+            board.currentState = GameState.move;
         }
     }
 
@@ -131,6 +144,8 @@ public class Gems : MonoBehaviour
         {
             //Right swipe
             otherDot = board.allDots[column + 1, row];
+            previousRow = row;
+            previousColumn = column;
             otherDot.GetComponent<Gems>().column -= 1;
             column += 1;
         }
@@ -138,6 +153,8 @@ public class Gems : MonoBehaviour
         {
             //Up swipe
             otherDot = board.allDots[column, row + 1];
+            previousRow = row;
+            previousColumn = column;
             otherDot.GetComponent<Gems>().row -= 1;
             row += 1;
         }
@@ -145,6 +162,8 @@ public class Gems : MonoBehaviour
         {
             //Left swipe
             otherDot = board.allDots[column - 1, row];
+            previousRow = row;
+            previousColumn = column;
             otherDot.GetComponent<Gems>().column += 1;
             column -= 1;
         }
@@ -152,6 +171,8 @@ public class Gems : MonoBehaviour
         {
             //Down swipe
             otherDot = board.allDots[column, row - 1];
+            previousRow = row;
+            previousColumn = column;
             otherDot.GetComponent<Gems>().row += 1;
             row -= 1;
         }

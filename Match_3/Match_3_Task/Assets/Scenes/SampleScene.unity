@@ -223,8 +223,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d835a255200e544a218b9d5a547546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 1
   Width: 7
   Height: 10
+  offSet: 20
   TilePrefab: {fileID: 1367527622001669470, guid: ec0942c222f662e49b51ffe65b27ce00,
     type: 3}
   dots:
