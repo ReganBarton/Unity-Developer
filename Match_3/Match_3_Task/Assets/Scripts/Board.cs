@@ -184,7 +184,7 @@ public class Board : MonoBehaviour
     {
         RefillBoard();
         yield return new WaitForSeconds(.3f);
-        int Maxiterations = 0;
+        int Maxiterations = 0; 
         while (MatchesOnBoard() && Maxiterations < 100)
         {
             yield return new WaitForSeconds(.3f);
@@ -192,7 +192,100 @@ public class Board : MonoBehaviour
             Maxiterations++;
         }
         yield return new WaitForSeconds(.3f);
+
+        if(NoMatches())
+        {
+            Debug.Log("No More Matches");
+        }
+        yield return new WaitForSeconds(.3f);
+
+
         currentState = GameState.move;
     }
 
+    private void SwitchPieces(int column, int row, Vector2 direction)
+    {
+        GameObject holder = allDots[column + (int)direction.x, row + (int)direction.y] as GameObject;
+        allDots[column + (int)direction.x, row + (int)direction.y] = allDots[column, row];
+        allDots[column, row] = holder;
+
+    }
+
+    private bool CheckForMatches()
+    {
+        for(int i = 0; i < Width; i++)
+        {
+            for(int w = 0; w < Width; w++)
+            {
+                if(allDots[i, w] != null)
+                {
+                     if(i < Width - 2)
+                    {
+                     if(allDots[i + 1, w] != null && allDots[i + 2, w] != null)
+                      {
+                         if(allDots[i + 1, w].tag == allDots[i, w].tag && allDots[i + 2, w].tag == allDots[i, w].tag)
+                          {
+                               return true;
+                          }
+                      }
+                    }
+
+                     if(w < Height - 2)
+                  {
+
+                    
+
+                    if (allDots[i, w + 1] != null && allDots[i, w + 2] != null)
+                    {
+                        if(allDots[i, w + 1].tag == allDots[i, w].tag && allDots[i, w + 2].tag == allDots[i, w].tag)
+                        {
+                            return true;
+                        }
+                    }
+                  }
+                }
+            }
+        }
+        return false;
+    }
+
+    private bool SwitchCheck(int column, int row, Vector2 direction)
+    {
+        SwitchPieces(column, row, direction);
+        if (CheckForMatches())
+        {
+            SwitchPieces(column, row, direction);
+            return true;
+        }
+        SwitchPieces(column, row, direction);
+        return false;
+    }
+
+    private bool NoMatches()
+    {
+        for (int i = 0; i < Width; i++)
+        {
+            for (int w = 0; w < Height; w++)
+            {
+                if (allDots[i, w] != null)
+                {
+                    if (i < Width - 1)
+                    {
+                        if (SwitchCheck(i, w, Vector2.right))
+                        {
+                            return false;
+                        }
+                    }
+                    if (w < Height - 1)
+                    {
+                        if (SwitchCheck(i, w, Vector2.up))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
 }

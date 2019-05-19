@@ -1,5 +1,5 @@
 2018.3.8f1:3.3.0.2
-StandaloneWindows64
+StandaloneWindows
 E:\Unity\Editor\Data\Managed/UnityEngine/UnityEngine.dll
 E:\Unity\Editor\Data\Managed/UnityEngine/UnityEngine.AIModule.dll
 E:\Unity\Editor\Data\Managed/UnityEngine/UnityEngine.ARModule.dll
@@ -63,27 +63,13 @@ E:\Unity\Editor\Data\Managed/UnityEngine/UnityEngine.XRModule.dll
 E:\Unity\Editor\Data\Managed/UnityEditor.dll
 E:\Unity\Editor\Data\Managed/Unity.Locator.dll
 E:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll
-E:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll
 E:/Unity/Editor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll
-E:/Unity/Editor/Data/UnityExtensions/Unity/Timeline/Editor/UnityEditor.Timeline.dll
 E:/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll
-E:/Unity/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll
-E:/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/Editor/UnityEditor.GoogleAudioSpatializer.dll
 E:/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/RuntimeEditor/UnityEngine.GoogleAudioSpatializer.dll
-E:/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/Editor/UnityEditor.SpatialTracking.dll
 E:/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll
-E:/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll
-E:/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll
-E:/Unity/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
-E:/Unity/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
-E:/Unity/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll
-E:/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll
-C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll
-C:/Users/Regan/Desktop/Unity-Developer/Match_3/Match_3_Task/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll
 C:/Users/Regan/Desktop/Unity-Developer/Match_3/Match_3_Task/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll
 C:/Users/Regan/Desktop/Unity-Developer/Match_3/Match_3_Task/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll
 C:/Users/Regan/Desktop/Unity-Developer/Match_3/Match_3_Task/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll
-C:/Users/Regan/Desktop/Unity-Developer/Match_3/Match_3_Task/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll
 E:\Unity\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll
 E:\Unity\Editor\Data\NetStandard\compat\2.0.0\shims\netstandard\Microsoft.Win32.Primitives.dll
 E:\Unity\Editor\Data\NetStandard\compat\2.0.0\shims\netstandard\System.AppContext.dll
@@ -199,6 +185,19 @@ E:\Unity\Editor\Data\NetStandard\compat\2.0.0\shims\netfx\System.Windows.dll
 E:\Unity\Editor\Data\NetStandard\compat\2.0.0\shims\netfx\System.Xml.dll
 E:\Unity\Editor\Data\NetStandard\compat\2.0.0\shims\netfx\System.Xml.Linq.dll
 E:\Unity\Editor\Data\NetStandard\compat\2.0.0\shims\netfx\System.Xml.Serialization.dll
+E:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll
+E:/Unity/Editor/Data/UnityExtensions/Unity/Timeline/Editor/UnityEditor.Timeline.dll
+E:/Unity/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll
+E:/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/Editor/UnityEditor.GoogleAudioSpatializer.dll
+E:/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/Editor/UnityEditor.SpatialTracking.dll
+E:/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll
+E:/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll
+E:/Unity/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+E:/Unity/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll
+E:/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll
+C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll
+C:/Users/Regan/Desktop/Unity-Developer/Match_3/Match_3_Task/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll
+C:/Users/Regan/Desktop/Unity-Developer/Match_3/Match_3_Task/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll
 E:\Unity\Editor\Data\Managed/UnityEngine/UnityEngine.SpatialTrackingModule.dll
 E:\Unity\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll
 E:\Unity\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\System.dll
