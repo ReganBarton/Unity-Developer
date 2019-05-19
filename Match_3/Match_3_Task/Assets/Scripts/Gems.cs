@@ -6,15 +6,20 @@ public class Gems : MonoBehaviour
 {
     public int column;
     public int row;
+    public int previousColumn;
+    public int previousRow;
     public int TargetX;
     public int TargetY;
     public bool isMatched = false;
+
+
     private GameObject otherDot;
     private Board board;
     private Vector2 firstTouchPosition; //On finger down
     private Vector2 lastTouchPosition;  //On finger up
     private Vector2 tempPostion;
     public float swipeAngle = 0;       //Angle finger moved
+    public float swipeResist = 1f;
 
     void Start()
     {
@@ -23,6 +28,8 @@ public class Gems : MonoBehaviour
         TargetY = (int)transform.position.y;
         row = TargetY;
         column = TargetX;
+        previousRow = row;
+        previousColumn = column;
     }
 
 
@@ -65,6 +72,23 @@ public class Gems : MonoBehaviour
         }
     }
 
+    public IEnumerator CheckMoveCo()
+    {
+        yield return new WaitForSeconds(.5f);
+        if(otherDot != null)
+        {
+            if (!isMatched && !otherDot.GetComponent<Gems>().isMatched)
+            {
+                otherDot.GetComponent<Gems>().row = row;
+                otherDot.GetComponent<Gems>().column = column;
+                row = previousRow;
+                column = previousColumn;
+            }
+            otherDot = null;
+        }
+
+    }
+
     private void OnMouseDown()
     {
         firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -80,21 +104,24 @@ public class Gems : MonoBehaviour
 
     void Angle()
     {
+        if(Mathf.Abs(lastTouchPosition.y -firstTouchPosition.y) > swipeResist || Mathf.Abs(lastTouchPosition.x - firstTouchPosition.x) > swipeResist)
+        {
         swipeAngle = Mathf.Atan2(lastTouchPosition.y - firstTouchPosition.y, lastTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
         //Debug.Log(swipeAngle);
         MovePieces();
+        }
     }
 
     void MovePieces()
     {
-        if(swipeAngle > -45 && swipeAngle <= 45 && column < board.Width)
+        if(swipeAngle > -45 && swipeAngle <= 45 && column < board.Width - 1)
         {
             //Right swipe
             otherDot = board.allDots[column + 1, row];
             otherDot.GetComponent<Gems>().column -= 1;
             column += 1;
         }
-        else if (swipeAngle > 45 && swipeAngle <+ 135 && row < board.Height)
+        else if (swipeAngle > 45 && swipeAngle <+ 135 && row < board.Height - 1)
         {
             //Up swipe
             otherDot = board.allDots[column, row + 1];
@@ -115,6 +142,7 @@ public class Gems : MonoBehaviour
             otherDot.GetComponent<Gems>().row += 1;
             row -= 1;
         }
+        StartCoroutine(CheckMoveCo());
     }
 
     void FindMatch()
@@ -123,6 +151,10 @@ public class Gems : MonoBehaviour
         {
             GameObject leftGem1 = board.allDots[column - 1, row];
             GameObject rightGem1 = board.allDots[column + 1, row];
+
+            if(leftGem1 != null && rightGem1 != null)
+        {
+            
             if (leftGem1.tag == this.gameObject.tag && rightGem1.tag == this.gameObject.tag)
             {
                 leftGem1.GetComponent<Gems>().isMatched = true;
@@ -130,16 +162,20 @@ public class Gems : MonoBehaviour
                 isMatched = true;
             }
         }
+    }
 
         if (row > 0 && row < board.Height - 1)
         {
             GameObject UpGem1 = board.allDots[column, row + 1];
             GameObject DownGem1 = board.allDots[column, row - 1];
+            if(UpGem1 != null && DownGem1 != null)
+            { 
             if (UpGem1.tag == this.gameObject.tag && DownGem1.tag == this.gameObject.tag)
             {
                 UpGem1.GetComponent<Gems>().isMatched = true;
                 DownGem1.GetComponent<Gems>().isMatched = true;
                 isMatched = true;
+            }
             }
         }
     }
