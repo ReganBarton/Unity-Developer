@@ -47,7 +47,11 @@ public class Gems : MonoBehaviour
         {
             //Move towards target
             tempPostion = new Vector2(TargetX, transform.position.y);
-            transform.position = Vector2.Lerp(transform.position, tempPostion, .4f);
+            transform.position = Vector2.Lerp(transform.position, tempPostion, .6f);
+            if (board.allDots[column, row] != this.gameObject)
+            {
+                board.allDots[column, row] = this.gameObject;
+            }
         }
         else
         {
@@ -61,7 +65,11 @@ public class Gems : MonoBehaviour
         {
             //Move towards target
             tempPostion = new Vector2(transform.position.x, TargetY);
-            transform.position = Vector2.Lerp(transform.position, tempPostion, .4f);
+            transform.position = Vector2.Lerp(transform.position, tempPostion, .6f);
+            if(board.allDots[column, row] != this.gameObject)
+            {
+                board.allDots[column, row] = this.gameObject;
+            }
         }
         else
         {
@@ -84,8 +92,13 @@ public class Gems : MonoBehaviour
                 row = previousRow;
                 column = previousColumn;
             }
+            else
+            {
+                board.DestroyMatches();
+            }
             otherDot = null;
         }
+        
 
     }
 
@@ -171,11 +184,11 @@ public class Gems : MonoBehaviour
             if(UpGem1 != null && DownGem1 != null)
             { 
             if (UpGem1.tag == this.gameObject.tag && DownGem1.tag == this.gameObject.tag)
-            {
-                UpGem1.GetComponent<Gems>().isMatched = true;
-                DownGem1.GetComponent<Gems>().isMatched = true;
-                isMatched = true;
-            }
+                {
+                    UpGem1.GetComponent<Gems>().isMatched = true;
+                 DownGem1.GetComponent<Gems>().isMatched = true;
+                 isMatched = true;
+                }
             }
         }
     }
