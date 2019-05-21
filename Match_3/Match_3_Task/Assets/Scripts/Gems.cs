@@ -13,6 +13,7 @@ public class Gems : MonoBehaviour
     public int TargetY;
     public bool isMatched = false;
 
+    private HintManager hintManager;
     private FindMatches findMatches; 
     private GameObject otherDot;
     private Board board;
@@ -24,6 +25,7 @@ public class Gems : MonoBehaviour
 
     void Start()
     {
+        hintManager = FindObjectOfType<HintManager>();
         board = FindObjectOfType<Board>();
         findMatches = FindObjectOfType<FindMatches>();
         //TargetX = (int)transform.position.x;
@@ -113,10 +115,18 @@ public class Gems : MonoBehaviour
 
     private void OnMouseDown()
     {
+
+        if(hintManager != null)
+        {
+            hintManager.DestroyHint();
+        }
+
         if (board.currentState == GameState.move)
         { 
         firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
+
+
 
     }
 
