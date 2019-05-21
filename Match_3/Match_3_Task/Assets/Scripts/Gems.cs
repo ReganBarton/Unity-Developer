@@ -17,10 +17,10 @@ public class Gems : MonoBehaviour
     private FindMatches findMatches; 
     private GameObject otherDot;
     private Board board;
-    private Vector2 firstTouchPosition; //On finger down
-    private Vector2 lastTouchPosition;  //On finger up
+    private Vector2 firstTouchPosition; 
+    private Vector2 lastTouchPosition;  
     private Vector2 tempPostion;
-    public float swipeAngle = 0;       //Angle finger moved
+    public float swipeAngle = 0;       
     public float swipeResist = 1f;
 
     void Start()
@@ -33,7 +33,7 @@ public class Gems : MonoBehaviour
 
     void Update()
     {
-        //FindMatch();
+        
         if (isMatched)
         {
             SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
@@ -43,7 +43,7 @@ public class Gems : MonoBehaviour
         TargetY = row;
         if(Mathf.Abs(TargetX - transform.position.x) > .1)
         {
-            //Move towards target
+          
             tempPostion = new Vector2(TargetX, transform.position.y);
             transform.position = Vector2.Lerp(transform.position, tempPostion, .6f);
             if (board.allDots[column, row] != this.gameObject)
@@ -54,7 +54,7 @@ public class Gems : MonoBehaviour
         }
         else
         {
-            //Directly set position
+          
             tempPostion = new Vector2(TargetX, transform.position.y);
             transform.position = tempPostion;
             board.allDots[column, row] = this.gameObject;
@@ -62,7 +62,7 @@ public class Gems : MonoBehaviour
 
         if (Mathf.Abs(TargetY - transform.position.y) > .1)
         {
-            //Move towards target
+          
             tempPostion = new Vector2(transform.position.x, TargetY);
             transform.position = Vector2.Lerp(transform.position, tempPostion, .6f);
             if(board.allDots[column, row] != this.gameObject)
@@ -75,7 +75,7 @@ public class Gems : MonoBehaviour
         }
         else
         {
-            //Directly set position
+      
             tempPostion = new Vector2(transform.position.x, TargetY);
             transform.position = tempPostion;
             board.allDots[column, row] = this.gameObject;
@@ -138,7 +138,6 @@ public class Gems : MonoBehaviour
         if(Mathf.Abs(lastTouchPosition.y -firstTouchPosition.y) > swipeResist || Mathf.Abs(lastTouchPosition.x - firstTouchPosition.x) > swipeResist)
         {
         swipeAngle = Mathf.Atan2(lastTouchPosition.y - firstTouchPosition.y, lastTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
-        //Debug.Log(swipeAngle);
         MovePieces();
             board.currentState = GameState.wait;
         }
@@ -152,7 +151,7 @@ public class Gems : MonoBehaviour
     {
         if(swipeAngle > -45 && swipeAngle <= 45 && column < board.Width - 1)
         {
-            //Right swipe
+    
             otherDot = board.allDots[column + 1, row];
             previousRow = row;
             previousColumn = column;
@@ -161,7 +160,7 @@ public class Gems : MonoBehaviour
         }
         else if (swipeAngle > 45 && swipeAngle <+ 135 && row < board.Height - 1)
         {
-            //Up swipe
+      
             otherDot = board.allDots[column, row + 1];
             previousRow = row;
             previousColumn = column;
@@ -170,7 +169,7 @@ public class Gems : MonoBehaviour
         }
         else if ((swipeAngle > 135 || swipeAngle <= -135) && column > 0)
         {
-            //Left swipe
+         
             otherDot = board.allDots[column - 1, row];
             previousRow = row;
             previousColumn = column;
@@ -179,7 +178,7 @@ public class Gems : MonoBehaviour
         }
         else if (swipeAngle < -45 && swipeAngle >= -135 && row > 0)
         {
-            //Down swipe
+
             otherDot = board.allDots[column, row - 1];
             previousRow = row;
             previousColumn = column;

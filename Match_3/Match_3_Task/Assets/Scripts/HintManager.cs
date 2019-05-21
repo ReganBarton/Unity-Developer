@@ -11,14 +11,13 @@ public class HintManager : MonoBehaviour
     public GameObject hintParticle;
     public GameObject currentHint;
 
-    // Use this for initialization
+
     void Start()
     {
         board = FindObjectOfType<Board>();
         hintDelaySeconds = hintDelay;
     }
 
-    // Update is called once per frame
     void Update()
     {
         hintDelaySeconds -= Time.deltaTime;
@@ -30,7 +29,6 @@ public class HintManager : MonoBehaviour
 
     }
 
-    //First, I want to find all possible matches on the board
     List<GameObject> FindAllMatches()
     {
         List<GameObject> possibleMoves = new List<GameObject>();
@@ -60,7 +58,6 @@ public class HintManager : MonoBehaviour
         }
         return possibleMoves;
     }
-    //Pick one of those matches randomly
     GameObject PickOneRandomly()
     {
         List<GameObject> possibleMoves = new List<GameObject>();
@@ -72,7 +69,6 @@ public class HintManager : MonoBehaviour
         }
         return null;
     }
-    //Create the hint behind the chosen match
     private void MarkHint()
     {
         GameObject move = PickOneRandomly();
@@ -81,7 +77,6 @@ public class HintManager : MonoBehaviour
             currentHint = Instantiate(hintParticle, move.transform.position, Quaternion.identity);
         }
     }
-    //Destroy the hint.
     public void DestroyHint()
     {
         if (currentHint != null)

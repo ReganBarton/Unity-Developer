@@ -24,14 +24,18 @@ public class Board : MonoBehaviour
     public int basePieceValue = 20;
     private int streakValue = 1;
     private ScoreManager scoreManager;
+    private SoundManager soundManager;
+    public float refillDelay = 0.5f;
+    public int[] scoreGoals;
 
     
     void Start()
     {
+        soundManager = FindObjectOfType<SoundManager>();
         scoreManager = FindObjectOfType<ScoreManager>();
         findMatches = FindObjectOfType<FindMatches>();
-        Tiles = new Background[Width, Height];  /*Initilizing array for background game tiles. */
-        allDots = new GameObject[Width, Height]; /*Initilizing array for interactive tiles. */
+        Tiles = new Background[Width, Height];  
+        allDots = new GameObject[Width, Height]; 
         SetUp();
 
     }
@@ -43,12 +47,12 @@ public class Board : MonoBehaviour
            for (int w = 0; w < Height; w++)
             {
 
-                Vector2 tempPosition = new Vector2(i, w + offSet);   /*Creates game tiles and alignes them in rows and columns. */
+                Vector2 tempPosition = new Vector2(i, w + offSet);  
                 Vector2 tilePosition = new Vector2(i, w + offSet);
                 GameObject backgroundTile =  Instantiate(TilePrefab, tilePosition,Quaternion.identity) as GameObject;
                 backgroundTile.transform.parent = this.transform;
                 backgroundTile.name = "( " + i + ", " + w + " )";
-                int dotToUse = Random.Range(0, dots.Length);  /*Creates random colored interactive dots on the generated tiles.*/
+                int dotToUse = Random.Range(0, dots.Length);  
                 int maxIterations = 0;
                 while(MatchesAt(i, w, dots[dotToUse]) && maxIterations < 100)
                 {
@@ -107,6 +111,10 @@ public class Board : MonoBehaviour
         if (allDots[column, row].GetComponent<Gems>().isMatched)
         {
             findMatches.currentMatches.Remove(allDots[column, row]);
+            if(soundManager != null)
+            {
+                soundManager.PlayDestroyNoise();
+            }
             Destroy(allDots[column, row]);
             scoreManager.IncreaseScore(basePieceValue * streakValue);
             allDots[column, row] = null;
@@ -146,7 +154,7 @@ public class Board : MonoBehaviour
             }
             nullCount = 0;
         }
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(refillDelay * .5f);
         StartCoroutine(FillBoardCo());
     }
 
@@ -160,6 +168,14 @@ public class Board : MonoBehaviour
                 {
                     Vector2 tempPosition = new Vector2(i, w + offSet);
                     int dotToUse = Random.Range(0, dots.Length);
+                    int maxIterations = 0;
+                    while(MatchesAt(i, w, dots[dotToUse]) && maxIterations < 100)
+                    {
+                        maxIterations++;
+                        dotToUse = Random.Range(0, dots.Length);
+                    }
+                    maxIterations = 0;
+
                     GameObject piece = Instantiate(dots[dotToUse], tempPosition, Quaternion.identity);
                     allDots[i, w] = piece;
                     piece.GetComponent<Gems>().row = w;
@@ -190,22 +206,22 @@ public class Board : MonoBehaviour
     private IEnumerator FillBoardCo()
     {
         RefillBoard();
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(refillDelay);
         int Maxiterations = 0; 
         while (MatchesOnBoard() && Maxiterations < 100)
         {
             streakValue++;
-            yield return new WaitForSeconds(.3f);
             DestroyMatches();
+            yield return new WaitForSeconds(2 * refillDelay);
             Maxiterations++;
         }
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(refillDelay);
 
         if(NoMatches())
         {
             Debug.Log("No More Matches");
         }
-        yield return new WaitForSeconds(.3f);
+
 
 
         currentState = GameState.move;
