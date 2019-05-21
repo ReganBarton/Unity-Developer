@@ -21,10 +21,14 @@ public class Board : MonoBehaviour
     private Background[,] Tiles;
     public GameObject[,] allDots;
     private FindMatches findMatches;
+    public int basePieceValue = 20;
+    private int streakValue = 1;
+    private ScoreManager scoreManager;
 
     
     void Start()
     {
+        scoreManager = FindObjectOfType<ScoreManager>();
         findMatches = FindObjectOfType<FindMatches>();
         Tiles = new Background[Width, Height];  /*Initilizing array for background game tiles. */
         allDots = new GameObject[Width, Height]; /*Initilizing array for interactive tiles. */
@@ -38,8 +42,10 @@ public class Board : MonoBehaviour
         {
            for (int w = 0; w < Height; w++)
             {
+
                 Vector2 tempPosition = new Vector2(i, w + offSet);   /*Creates game tiles and alignes them in rows and columns. */
-                GameObject backgroundTile =  Instantiate(TilePrefab, tempPosition,Quaternion.identity) as GameObject;
+                Vector2 tilePosition = new Vector2(i, w + offSet);
+                GameObject backgroundTile =  Instantiate(TilePrefab, tilePosition,Quaternion.identity) as GameObject;
                 backgroundTile.transform.parent = this.transform;
                 backgroundTile.name = "( " + i + ", " + w + " )";
                 int dotToUse = Random.Range(0, dots.Length);  /*Creates random colored interactive dots on the generated tiles.*/
@@ -102,6 +108,7 @@ public class Board : MonoBehaviour
         {
             findMatches.currentMatches.Remove(allDots[column, row]);
             Destroy(allDots[column, row]);
+            scoreManager.IncreaseScore(basePieceValue * streakValue);
             allDots[column, row] = null;
         }
     }
@@ -187,6 +194,7 @@ public class Board : MonoBehaviour
         int Maxiterations = 0; 
         while (MatchesOnBoard() && Maxiterations < 100)
         {
+            streakValue++;
             yield return new WaitForSeconds(.3f);
             DestroyMatches();
             Maxiterations++;
@@ -201,6 +209,7 @@ public class Board : MonoBehaviour
 
 
         currentState = GameState.move;
+        streakValue = 1;
     }
 
     private void SwitchPieces(int column, int row, Vector2 direction)

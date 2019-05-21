@@ -28,12 +28,6 @@ public class Gems : MonoBehaviour
         hintManager = FindObjectOfType<HintManager>();
         board = FindObjectOfType<Board>();
         findMatches = FindObjectOfType<FindMatches>();
-        //TargetX = (int)transform.position.x;
-       // TargetY = (int)transform.position.y;
-        //row = TargetY;
-        //column = TargetX;
-        //previousRow = row;
-        //previousColumn = column;
     }
 
 
