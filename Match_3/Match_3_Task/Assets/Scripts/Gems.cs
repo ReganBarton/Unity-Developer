@@ -13,6 +13,7 @@ public class Gems : MonoBehaviour
     public int TargetY;
     public bool isMatched = false;
 
+    private EndGameManager endGameManager;
     private HintManager hintManager;
     private FindMatches findMatches; 
     private GameObject otherDot;
@@ -25,6 +26,9 @@ public class Gems : MonoBehaviour
 
     void Start()
     {
+
+
+        endGameManager = FindObjectOfType<EndGameManager>();
         hintManager = FindObjectOfType<HintManager>();
         board = FindObjectOfType<Board>();
         findMatches = FindObjectOfType<FindMatches>();
@@ -98,6 +102,13 @@ public class Gems : MonoBehaviour
             }
             else
             {
+                if(endGameManager != null)
+                {
+                    if (endGameManager.requirements.gameType == GameType.Moves)
+                    {
+                        endGameManager.DecreaseCounterValue();
+                    }
+                }
                 board.DestroyMatches();
 
             }
