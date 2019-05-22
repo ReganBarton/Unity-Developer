@@ -6,7 +6,10 @@ using UnityEngine;
 public enum GameState
 {
     wait,
-    move
+    move,
+    win,
+    lose,
+    pause
 }
 
 
@@ -25,6 +28,7 @@ public class Board : MonoBehaviour
     private int streakValue = 1;
     private ScoreManager scoreManager;
     private SoundManager soundManager;
+    
     public float refillDelay = 0.5f;
     public int[] scoreGoals;
 
@@ -34,9 +38,11 @@ public class Board : MonoBehaviour
         soundManager = FindObjectOfType<SoundManager>();
         scoreManager = FindObjectOfType<ScoreManager>();
         findMatches = FindObjectOfType<FindMatches>();
+        
         Tiles = new Background[Width, Height];  
         allDots = new GameObject[Width, Height]; 
         SetUp();
+        currentState = GameState.pause;
 
     }
 

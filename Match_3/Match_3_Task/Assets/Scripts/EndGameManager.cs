@@ -20,9 +20,12 @@ public class EndGameManager : MonoBehaviour
 {
     public GameObject movesLabel;
     public GameObject timeLabel;
+    public GameObject youWinPanel;
+    public GameObject tryAgainPanel;
     public Text counter;
     public EndGameRequirements requirements;
     public int currentCounterValue;
+    private Board board;
     private float timerSeconds;
 
 
@@ -30,6 +33,7 @@ public class EndGameManager : MonoBehaviour
     void Start()
     {
         SetupGame();
+        board = FindObjectOfType<Board>();
     }
 
     void SetupGame()
@@ -51,21 +55,41 @@ public class EndGameManager : MonoBehaviour
 
     public void DecreaseCounterValue()
     {
+        if(board.currentState != GameState.pause)
+        {
 
         currentCounterValue--;
         counter.text = "" + currentCounterValue;
         if(currentCounterValue <= 0)
         {
-
-            Debug.Log("Loser Bitch");
-            currentCounterValue = 0;
-            counter.text = "" + currentCounterValue;
-
+           LoseGame();
+        }
         }
 
     }
 
+    public void WinGame()
+    {
+        youWinPanel.SetActive(true);
+        board.currentState = GameState.win;
+        currentCounterValue = 0;
+        counter.text = "" + currentCounterValue;
+        FadePanelController fade = FindObjectOfType<FadePanelController>();
+        fade.GameOver();
+    }
 
+
+    public void LoseGame()
+    {
+        tryAgainPanel.SetActive(true);
+        board.currentState = GameState.lose;
+        Debug.Log("You Lose");
+        currentCounterValue = 0;
+        counter.text = "" + currentCounterValue;
+        FadePanelController fade = FindObjectOfType<FadePanelController>();
+        fade.GameOver();
+
+    }
 
     // Update is called once per frame
     void Update()

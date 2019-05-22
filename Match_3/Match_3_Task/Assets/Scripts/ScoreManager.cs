@@ -9,10 +9,12 @@ public class ScoreManager : MonoBehaviour
     public Text scoreText;
     public int score;
     public Image scoreBar;
+    private EndGameManager endGame;
 
 
     void Start()
     {
+        endGame = FindObjectOfType<EndGameManager>();
         board = FindObjectOfType<Board>();
         
     }
@@ -37,6 +39,10 @@ public class ScoreManager : MonoBehaviour
         {
             int length = board.scoreGoals.Length;
             scoreBar.fillAmount = (float)score / (float)board.scoreGoals[length - 1];
+        }
+        if(score >= board.scoreGoals[1])
+        {
+            endGame.WinGame();
         }
     }
 
