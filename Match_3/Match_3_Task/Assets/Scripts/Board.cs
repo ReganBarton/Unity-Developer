@@ -9,7 +9,8 @@ public enum GameState
     move,
     win,
     lose,
-    pause
+    pause,
+    paused
 }
 
 
@@ -229,7 +230,7 @@ public class Board : MonoBehaviour
         }
 
 
-
+        if(currentState != GameState.pause)
         currentState = GameState.move;
         streakValue = 1;
     }

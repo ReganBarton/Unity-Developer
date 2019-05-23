@@ -22,6 +22,7 @@ public class EndGameManager : MonoBehaviour
     public GameObject timeLabel;
     public GameObject youWinPanel;
     public GameObject tryAgainPanel;
+    public GameObject pausePanel;
     public Text counter;
     public EndGameRequirements requirements;
     public int currentCounterValue;
@@ -83,9 +84,18 @@ public class EndGameManager : MonoBehaviour
     {
         tryAgainPanel.SetActive(true);
         board.currentState = GameState.lose;
-        Debug.Log("You Lose");
         currentCounterValue = 0;
         counter.text = "" + currentCounterValue;
+        FadePanelController fade = FindObjectOfType<FadePanelController>();
+        fade.GameOver();
+
+    }
+
+    public void PauseGame()
+    {
+        pausePanel.SetActive(true);
+        board.currentState = GameState.paused;
+        Debug.Log("You Lose");
         FadePanelController fade = FindObjectOfType<FadePanelController>();
         fade.GameOver();
 
