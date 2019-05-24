@@ -43,6 +43,8 @@ public class ScoreManager : MonoBehaviour
         if(score >= board.scoreGoals[1])
         {
             endGame.WinGame();
+            new WaitForSeconds(1f);
+            board.currentState = GameState.paused;
         }
     }
 

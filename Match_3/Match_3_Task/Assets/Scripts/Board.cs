@@ -14,6 +14,21 @@ public enum GameState
 }
 
 
+public enum TileKind
+{
+    Breakable,
+    Blank,
+    Normal
+}
+
+[System.Serializable]
+public class TileType
+{
+    public int x;
+    public int y;
+    public TileKind tileKind;
+}
+
 public class Board : MonoBehaviour
 {
     public GameState currentState = GameState.move;
@@ -22,6 +37,9 @@ public class Board : MonoBehaviour
     public int offSet;
     public GameObject TilePrefab;
     public GameObject[] dots;
+    public TileType[] boardLayout;
+    private bool[,] blankSpaces;
+
     private Background[,] Tiles;
     public GameObject[,] allDots;
     private FindMatches findMatches;
@@ -39,7 +57,7 @@ public class Board : MonoBehaviour
         soundManager = FindObjectOfType<SoundManager>();
         scoreManager = FindObjectOfType<ScoreManager>();
         findMatches = FindObjectOfType<FindMatches>();
-        
+        blankSpaces = new bool[Width, Height];
         Tiles = new Background[Width, Height];  
         allDots = new GameObject[Width, Height]; 
         SetUp();
@@ -47,8 +65,21 @@ public class Board : MonoBehaviour
 
     }
 
+    public void GenerateBlankSpaces()
+    {
+        for (int i = 0; i < boardLayout.Length; i++)
+        {
+            if (boardLayout[i].tileKind == TileKind.Blank)
+            {
+                blankSpaces[boardLayout[i].x, boardLayout[i].y] = true;
+            }
+        }
+    }
+
+
     private void SetUp()
     {
+        GenerateBlankSpaces();
         for ( int i = 0; i < Width; i++)
         {
            for (int w = 0; w < Height; w++)
@@ -226,6 +257,7 @@ public class Board : MonoBehaviour
 
         if(NoMatches())
         {
+            StartCoroutine(ShuffleBoard());
             Debug.Log("No More Matches");
         }
 
@@ -319,5 +351,50 @@ public class Board : MonoBehaviour
             }
         }
         return true;
+    }
+
+    private IEnumerator ShuffleBoard()
+    {
+        yield return new WaitForSeconds(0.5f);
+        List<GameObject> newBoard = new List<GameObject>();
+        for (int i = 0; i < Width; i++)
+        {
+            for (int w = 0; w < Height; w++)
+            {
+                if (allDots[i, w] != null)
+                {
+                    newBoard.Add(allDots[i, w]);
+                }
+            }
+        }
+        yield return new WaitForSeconds(0.5f);
+        for (int i = 0; i < Width; i++)
+        {
+            for (int w = 0; w < Height; w++)
+            {
+                if (!blankSpaces[i, w])
+                {
+                    int pieceToUse = Random.Range(0, newBoard.Count);
+                    int maxIterations = 0;
+
+                    while (MatchesAt(i, w, newBoard[pieceToUse]) && maxIterations < 100)
+                    {
+                        pieceToUse = Random.Range(0, newBoard.Count);
+                        maxIterations++;
+                        Debug.Log(maxIterations);
+                    }
+                    Gems piece = newBoard[pieceToUse].GetComponent<Gems>();
+                    maxIterations = 0;
+                    piece.column = i;
+                    piece.row = w;
+                    allDots[i, w] = newBoard[pieceToUse];
+                    newBoard.Remove(newBoard[pieceToUse]);
+                }
+            }
+        }
+        if (NoMatches())
+        {
+            StartCoroutine(ShuffleBoard());
+        }
     }
 }
