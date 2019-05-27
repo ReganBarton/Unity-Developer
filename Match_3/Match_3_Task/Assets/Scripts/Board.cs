@@ -245,7 +245,7 @@ public class Board : MonoBehaviour
     {
         RefillBoard();
         yield return new WaitForSeconds(refillDelay);
-        int Maxiterations = 0; 
+        int Maxiterations = 0;
         while (MatchesOnBoard() && Maxiterations < 100)
         {
             streakValue++;
@@ -255,16 +255,18 @@ public class Board : MonoBehaviour
         }
         yield return new WaitForSeconds(refillDelay);
 
-        if(NoMatches())
+        if (NoMatches())
         {
             StartCoroutine(ShuffleBoard());
-            Debug.Log("No More Matches");
+            //Debug.Log("No More Matches");
         }
 
 
-        if(currentState != GameState.pause)
-        currentState = GameState.move;
-        streakValue = 1;
+        if (currentState != GameState.pause)
+        { 
+                currentState = GameState.move;
+                streakValue = 1;
+         }
     }
 
     private void SwitchPieces(int column, int row, Vector2 direction)
@@ -279,7 +281,7 @@ public class Board : MonoBehaviour
     {
         for(int i = 0; i < Width; i++)
         {
-            for(int w = 0; w < Width; w++)
+            for(int w = 0; w < Height; w++)
             {
                 if(allDots[i, w] != null)
                 {
@@ -319,9 +321,11 @@ public class Board : MonoBehaviour
         if (CheckForMatches())
         {
             SwitchPieces(column, row, direction);
+            currentState = GameState.move;
             return true;
         }
         SwitchPieces(column, row, direction);
+        currentState = GameState.move;
         return false;
     }
 

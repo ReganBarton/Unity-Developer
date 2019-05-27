@@ -114,7 +114,8 @@ public class Gems : MonoBehaviour
             }
             otherDot = null;
         }
-        
+
+
 
     }
 
@@ -148,9 +149,9 @@ public class Gems : MonoBehaviour
     {
         if(Mathf.Abs(lastTouchPosition.y -firstTouchPosition.y) > swipeResist || Mathf.Abs(lastTouchPosition.x - firstTouchPosition.x) > swipeResist)
         {
-        swipeAngle = Mathf.Atan2(lastTouchPosition.y - firstTouchPosition.y, lastTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
-        MovePieces();
             board.currentState = GameState.wait;
+            swipeAngle = Mathf.Atan2(lastTouchPosition.y - firstTouchPosition.y, lastTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
+        MovePieces();
         }
         else
         {
@@ -162,41 +163,49 @@ public class Gems : MonoBehaviour
     {
         if(swipeAngle > -45 && swipeAngle <= 45 && column < board.Width - 1)
         {
-    
+            //RightSwipe
             otherDot = board.allDots[column + 1, row];
             previousRow = row;
             previousColumn = column;
             otherDot.GetComponent<Gems>().column -= 1;
             column += 1;
+            StartCoroutine(CheckMoveCo());
         }
         else if (swipeAngle > 45 && swipeAngle <+ 135 && row < board.Height - 1)
         {
-      
+
+            //UpSwipe
             otherDot = board.allDots[column, row + 1];
             previousRow = row;
             previousColumn = column;
             otherDot.GetComponent<Gems>().row -= 1;
             row += 1;
+            StartCoroutine(CheckMoveCo());
         }
         else if ((swipeAngle > 135 || swipeAngle <= -135) && column > 0)
         {
-         
+
+            //LeftSwipe
             otherDot = board.allDots[column - 1, row];
             previousRow = row;
             previousColumn = column;
             otherDot.GetComponent<Gems>().column += 1;
             column -= 1;
+            StartCoroutine(CheckMoveCo());
         }
         else if (swipeAngle < -45 && swipeAngle >= -135 && row > 0)
         {
 
+            //DownSwipe
             otherDot = board.allDots[column, row - 1];
             previousRow = row;
             previousColumn = column;
             otherDot.GetComponent<Gems>().row += 1;
             row -= 1;
+            StartCoroutine(CheckMoveCo());
         }
-        StartCoroutine(CheckMoveCo());
+        board.currentState = GameState.move;
+
     }
 
     void FindMatch()
